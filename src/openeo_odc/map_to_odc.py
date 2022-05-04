@@ -119,26 +119,27 @@ def resolve_from_parameter(node):
 
 def create_job_header(dask_url: str, job_id: str, user_id: str, odc_env_collection: str = "default", odc_env_user_gen: str = "user_generated"):
     """Create job imports."""
-    return f"""from dask_gateway import Gateway
+    return f"""#from dask_gateway import Gateway
 import datacube
 import openeo_processes as oeop
 import time
 
 # Initialize ODC instance
-cube = datacube.Datacube(app='collection', env='{odc_env_collection}')
-cube_user_gen = datacube.Datacube(app='user_gen', env='{odc_env_user_gen}')
+#cube = datacube.Datacube(app='collection', env='{odc_env_collection}')
+#cube_user_gen = datacube.Datacube(app='user_gen', env='{odc_env_user_gen}')
+cube = datacube.Datacube()
 # Connect to the gateway
-gateway = Gateway('{dask_url}')
-options = gateway.cluster_options()
-options.user_id = '{user_id}'
-options.job_id = '{job_id}'
-cluster = gateway.new_cluster(options)
-cluster.adapt(minimum=1, maximum=3)
-time.sleep(60)
-client = cluster.get_client()
+#gateway = Gateway('{dask_url}')
+#options = gateway.cluster_options()
+#options.user_id = '{user_id}'
+#options.job_id = '{job_id}'
+#cluster = gateway.new_cluster(options)
+#cluster.adapt(minimum=1, maximum=3)
+#time.sleep(60)
+#client = cluster.get_client()
 """
 
 def create_job_tail():
     """Ensure shutdown of cluster"""
-    return f"""cluster.shutdown()
-gateway.close()"""
+    return f"""#cluster.shutdown()
+#gateway.close()"""
